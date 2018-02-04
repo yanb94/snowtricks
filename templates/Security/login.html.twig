@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Login - {{parent()}}
+{% endblock %}
+
+{% block body %}
+<div class="container my-cont-user">
+
+    <div class="row">
+    	<div class="col-12 text-center d-none d-sm-block">
+    		<h1>Connexion</h1>
+    	</div>
+    	<div class="col-12">
+
+		    <div class="row justify-content-md-center">
+		        <div class="my-form-user col-lg-5 col-md-8 col-sm-12 col-12">
+		            <div class="col-12 well">
+		            	<div class="text-center d-sm-none d-md-none d-lg-none d-xl-none">
+		            		<h1>Connexion</h1>
+		            		<hr>
+		            	</div>
+		            	{% if error %}
+					        <div class="alert alert-danger">
+					            {{ error.messageKey }}
+					        </div>
+					    {% endif %}
+		                <form action="{{ path('security_login') }}" method="post">
+		                    <fieldset>
+		                        <div class="form-group">
+		                            <label for="username">Pseudo</label>
+		                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="password">Mot de passe</label>
+		                            <input type="password" id="password" name="_password" class="form-control" />
+		                        </div>
+
+		                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+		                        <div class="text-center">
+		                        	<span class="d-sm-none d-md-none d-lg-none d-xl-none">
+			                        	<a class="text-center" href="{{path('register')}}">Inscription</a>
+			                        	<br><br>
+									</span>
+		                        	<a class="text-center" href="{{path('forgot_password')}}">Mot de passe oublié ?</a>
+		                        	<br><br>
+			                        <button type="submit" class="btn btn-primary">
+			                            Connexion
+			                        </button>
+		                        </div>
+		                    </fieldset>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+
+</div>        
+{% endblock %}

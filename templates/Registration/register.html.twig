@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription - {{parent()}}
+{% endblock %}
+
+{% block body %}
+<div class="container my-cont-user">
+
+    <div class="row">
+    	<div class="col-12 text-center d-none d-sm-block">
+    		<h1>Inscription</h1>
+    	</div>
+    	<div class="col-12">
+		    <div class="row justify-content-md-center">
+		        <div class="my-form-user col-lg-5 col-md-8 col-sm-12 col-12">
+		            <div class="col-12 well">
+		            	<div class="text-center d-sm-none d-md-none d-lg-none d-xl-none">
+		            		<h1>Inscription</h1>
+		            		<hr>
+		            	</div>
+						{{ form_start(form) }}
+						    {{ form_row(form.username) }}
+						    {{ form_row(form.email) }}
+						    {{ form_row(form.password.first) }}
+						    {{ form_row(form.password.second) }}
+						    {{ form_row(form.photo) }}
+
+						    <div class="d-sm-none d-md-none d-lg-none d-xl-none text-center">
+	                        	<a class="text-center" href="{{path('security_login')}}">Vous avez déjà un compte ?</a>
+	                        	<br><br>
+							</div>
+
+						    <div class="text-center">
+						    	<button class="btn btn-primary" type="submit">Créer un compte</button>
+						    </div>
+
+						{{ form_end(form) }}
+		            </div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+
+</div> 
+{% endblock %}

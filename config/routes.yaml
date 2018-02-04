@@ -1,3 +1,30 @@
 index:
-   path: /
-   defaults: { _controller: 'App\Controller\PublicController::index' }
+  path: /
+  defaults: { _controller: 'App\Controller\PublicController::index' }
+security_login:
+  path: /login
+  defaults: { _controller: 'App\Controller\UserController::login'}
+security_logout:
+  path: /logout
+  defaults: { _controller: 'App\Controller\UserController::logout'}
+register:
+  path: /register
+  defaults: {_controller: 'App\Controller\UserController::register'}
+register_confirm:
+  path: /register_confirm
+  defaults: {_controller: 'App\Controller\UserController::registerConfirm'}
+confirm_user:
+  path: /confirm_user/{token}
+  defaults: {_controller: 'App\Controller\UserController::confirmUser'}
+forgot_password:
+  path: /forgot_password
+  defaults: {_controller: 'App\Controller\UserController::forgotPassword'}
+forgot_password_confirm:
+  path: /forgot_password_confirm
+  defaults: {_controller: 'App\Controller\UserController::forgotPasswordConfirm'}
+reset_password:
+  path: /reset_password/{token}
+  defaults: {_controller: 'App\Controller\UserController::resetPassword'}
+reset_password_confirm:
+  path: /reset_password_confirm
+  defaults: {_controller: 'App\Controller\UserController::resetPasswordConfirm'}
