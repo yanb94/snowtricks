@@ -42,6 +42,11 @@ class Video
     private $url;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure",inversedBy="videos")
+     */
+    private $figure;
+
+    /**
      * @return int
      */
     public function getId()
@@ -205,5 +210,25 @@ class Video
         "'  frameborder='0'  allowfullscreen></iframe>";
 
         return $video;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFigure()
+    {
+        return $this->figure;
+    }
+
+    /**
+     * @param mixed $figure
+     *
+     * @return self
+     */
+    public function setFigure(Figure $figure)
+    {
+        $this->figure = $figure;
+
+        return $this;
     }
 }

@@ -40,6 +40,11 @@ class Picture
     private $tempFilename;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure",inversedBy="images")
+     */
+    private $figure;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -157,6 +162,26 @@ class Picture
 
     public function getWebPath()
     {
-        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
+        return '/'.$this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFigure()
+    {
+        return $this->figure;
+    }
+
+    /**
+     * @param mixed $figure
+     *
+     * @return self
+     */
+    public function setFigure(Figure $figure)
+    {
+        $this->figure = $figure;
+
+        return $this;
     }
 }

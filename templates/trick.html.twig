@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{figure.name}} - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div id="img-index" class="my-img-index">
+    </div>
+    <div class="my-cover-img-index my-one-trick text-center">
+    </div>
+    <div class="d-flex d-justify-content-center my-cont-parent-trick">
+	    <div class="container my-background-white my-container-one-trick">
+	    	<div class="row my-big-img-trick">
+	    		<div class="col-12 my-no-padding my-big-img-trick-cont">
+	    			<div class="my-big-img-trick">
+	    				<img src="{{asset('img/default_small.jpg')}}">
+	    			</div>
+	    			<div class="my-big-img-cover">
+	    				<h1>{{figure.name}}</h1>
+	    				{% if is_granted('ROLE_USER') %}
+		    				<div class="my-edit-trick">
+		    					<a href="">
+		    						<i class="fas fa-pencil-alt fa-2x"></i>
+		    					</a>
+		    					&nbsp &nbsp
+		    					<a href="">
+									<i class="fas fa-trash-alt fa-2x"></i>
+								</a>
+		    				</div>
+	    				{% endif %}
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="row my-list-media-tricks">
+	    		
+	    	</div>
+	    	<div class="row my-description-trick">
+	    		<div class="col-12">
+		    		<p> 
+		    			{{figure.description|nl2br}}
+		    		</p>
+		    		<div class="text-center small">
+		    			Crée le {{figure.createdAt|date('j')}}/{{figure.createdAt|date('n')}}/{{figure.createdAt|date('Y ')}}
+			    		à
+			    		{{figure.createdAt|date(' G:i')}}
+
+			    		{% if figure.editedAt != null %}
+							- Modifié le {{figure.editedAt|date('j')}}/{{figure.editedAt|date('n')}}/{{figure.editedAt|date('Y ')}}
+				    		à
+				    		{{figure.editedAt|date(' G:i')}}
+			    		{% endif %}
+
+			    		- Groupe : {{figure.group.name}}
+		    		</div>
+		    			
+	    		</div>
+
+	    	</div>
+
+			<hr>
+
+			{% if is_granted('ROLE_USER') %}
+		    	<div class="row">
+		    		
+			    		<div class="col-12">
+			    			{{form_start(form)}}
+							
+							<div class="row justify-content-center">
+								<div class="col-lg-9 col-md-8 col-sm-6 col-7">{{form_widget(form)}}</div>
+								<div class="col-lg-3 col-md-4 col-sm-6 col-5"><input class="btn btn-primary" type="submit" value="Laisse un Commentaire"></div>
+							</div>
+
+			    			{{form_rest(form)}}
+			    			{{form_end(form)}}
+			    		</div>
+		    		
+		    	</div>
+		    	<hr>
+			{% endif %}
+	
+	    	<div class="row my-comment-trick justify-content-center my-no-margin">
+	    		<div class="col-lg-8 col-md-10 col-sm-12 col-12 col row my-no-padding">
+	    		{% for comment in comments %}
+	    		    <div class="col-12 row my-comment my-no-margin-horizon">
+	    		    	<div class="col-md-2 col-sm-4 col-4 text-center my-no-margin">
+	    		    		<img class="my-img-comment" src="{{comment.auhtor.photo.getWebPath()}}">
+	    		    	</div>
+	    		    	<div class="col-md-10 col-sm-8 col-8 text-justify my-comment-contenu my-no-margin">
+	    		    		{{comment.contenu}}
+	    		    	</div>
+	    		    	<div class="col-md-2 col-sm-4 col-4 text-center my-comment-user my-no-margin">
+	    		    		<b>{{comment.auhtor.username}}</b>
+	    		    	</div>
+	    		    	<div class="col-md-10 col-sm-8 col-8 text-right small my-comment-date my-no-margin">
+	    		    		Posté le {{comment.createdAt|date('j')}}/{{comment.createdAt|date('n')}}/{{comment.createdAt|date('Y ')}}
+			    		à
+			    		{{comment.createdAt|date(' G:i')}}
+	    		    	</div>
+	    		    </div>
+	    		{% endfor %}
+	    		</div>
+	    	</div>
+
+	    	<div class="row justify-content-center my-load-more-comment">
+	    		<div class="col-12 text-center">
+	    			<button id="load-more" class="btn btn-primary btn-lg">Afficher plus de commentaire</button>
+	    		</div>
+	    	</div>
+	   	</div>
+   	</div>
+
+{% endblock %}

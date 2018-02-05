@@ -1,1 +1,55 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div class="my-img-no-overlap">
+	    <div id="img-index" class="my-img-index">
+	    </div>
+	    <div class="my-cover-img-index text-center">
+	    	<h1 class="my-catch-phrase">Snowtricks le site communautaire des snowboarders</h1>
+	    	<div class="my-arrow-down">
+	    		<a href="#list-tricks">
+	    			<i class="fas fa-arrow-down fa-3x"></i>
+	    		</a>
+	    	</div>
+	    </div>
+    </div>
+    <div id="list-tricks" class="my-background-white container-fluid">
+    	<div class="row">
+    		{% for figure in figures %}
+    			<div class="col-xl-2 co-lg-3 col-md-4 col-sm-6 col-12">
+					<div class="my-tricks-preview">
+	    				<div class="my-tricks-thumb">
+	    					<img src="{{asset('img/default_small.jpg')}}">
+	    				</div>
+	    				<div class="my-tricks-info row">
+	    					<div class="col-7 my-preview-tricks-title ">
+	    						<a href="{{path('trick',{slug: figure.slug})}}"><h3>{{figure.name}}</h3></a>
+	    					</div>
+		    				{% if is_granted('ROLE_USER') %}
+		    					<div class="col-2 my-icon-trash-list text-right">
+			    					<i class="fas fa-pencil-alt fa-sm"></i>
+		    					</div>
+		    					<div class="col-3 my-icon-trash-list text-right">
+		    						<i class="fas fa-trash-alt fa-sm"></i>
+		    					</div>
+		    				{% endif %}
+	    				</div>
+					</div>
+    			</div>
+    		{% endfor %}
+    	</div>
+    	<div class="row">
+    		<div class="col-12 d-flex align-items-center justify-content-center my-index-load-more-button">
+    			<button class="btn btn-primary btn-lg">Voir plus</button>
+    		</div>
+    	</div>
+    	<div class="my-arrow-up row flex-row-reverse">
+    		<a href="#list-tricks">
+    			<i class="fas fa-arrow-up fa-3x"></i>
+    		</a>
+    	</div>
+    </div>
+{% endblock %}
