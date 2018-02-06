@@ -46,7 +46,7 @@ class Figure
      *
      * @Assert\Valid
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group", cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Group", cascade={"persist"})
      */
     private $group;
 
@@ -234,6 +234,8 @@ class Figure
     {
         $this->videos[] = $video;
 
+        $video->setFigure($video);
+
         return $this;
     }
 
@@ -252,6 +254,8 @@ class Figure
     public function addImage(Picture $image)
     {
         $this->images[] = $image;
+
+        $image->setFigure($image);
 
         return $this;
     }

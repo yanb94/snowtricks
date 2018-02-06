@@ -25,13 +25,25 @@ class FigureType extends AbstractType
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => PictureType::class,
+                'entry_options' => [
+                    "label" => false,
+                    "attr"=>["class" => "my-input-add-cont"]
+                ],
                 'allow_add' => true,
                 'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false
             ])
             ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,
+                'entry_options' => [
+                    "label" => false,
+                    "attr"=>["class" => "my-input-add-cont"]
+                ],
                 'allow_add' => true,
                 'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false
             ])
         ;
     }

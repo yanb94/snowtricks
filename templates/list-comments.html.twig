@@ -1,0 +1,18 @@
+{% for comment in comments %}
+    <div class="col-12 row my-comment my-no-margin-horizon">
+    	<div class="col-md-2 col-sm-4 col-4 text-center my-no-margin">
+    		<img class="my-img-comment" src="{{comment.auhtor.photo.getWebPath()}}">
+    	</div>
+    	<div class="col-md-10 col-sm-8 col-8 text-justify my-comment-contenu my-no-margin">
+    		{{comment.contenu}}
+    	</div>
+    	<div class="col-md-2 col-sm-4 col-4 text-center my-comment-user my-no-margin">
+    		<b>{{comment.auhtor.username}}</b>
+    	</div>
+    	<div class="col-md-10 col-sm-8 col-8 text-right small my-comment-date my-no-margin">
+    		Posté le {{comment.createdAt|date('j')}}/{{comment.createdAt|date('n')}}/{{comment.createdAt|date('Y ')}}
+		à
+		{{comment.createdAt|date(' G:i')}}
+    	</div>
+    </div>
+{% endfor %}
