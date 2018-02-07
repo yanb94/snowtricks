@@ -4,11 +4,22 @@ namespace App\DataFixtures;
 
 use App\Entity\Group;
 use App\Entity\Figure;
+use App\Entity\User;
+use App\Entity\Picture;
+use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $groupOne = (new Group())->setName('Les grabs');
@@ -18,6 +29,20 @@ class AppFixtures extends Fixture
         $manager->persist($groupOne);
         $manager->persist($groupTwo);
         $manager->persist($groupThree);
+
+        $perso = (new User())
+                ->setEmail('email@email.com')
+                ->setUsername('perso')
+                ->setPassword('password')
+                ->setPhoto((new Picture())->setExtension('png'))
+                ->setIsActive(true)
+                ->setRoles(array('ROLE_USER'));
+
+        $password = $this->encoder->encodePassword($perso, $perso->getPassword());
+
+        $perso->setPassword($password);
+
+        $manager->persist($perso);
 
         $data = [
              [
@@ -77,7 +102,12 @@ class AppFixtures extends Fixture
             $figure
                  ->setName($value['name'])
                  ->setDescription($value['description'])
-                 ->setGroup($value['group']);
+                 ->setGroup($value['group'])
+                 ->addImage((new Picture())->setExtension('jpg'))
+                 ->addImage((new Picture())->setExtension('jpg'))
+                 ->addImage((new Picture())->setExtension('jpg'))
+                 ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'))
+                 ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'));
 
             $manager->persist($figure);
         }

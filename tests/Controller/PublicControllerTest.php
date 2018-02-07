@@ -10,6 +10,7 @@ class PublicControllerTest extends WebTestCase
     {
     }
 
+
     /**
      * @dataProvider urlPublicOfController
      */
@@ -27,8 +28,8 @@ class PublicControllerTest extends WebTestCase
     public function testUrlUserFunctionnal($url, $response)
     {
         $client = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'username',
-            'PHP_AUTH_PW'   => 'pa$$word'
+            'PHP_AUTH_USER' => 'perso',
+            'PHP_AUTH_PW'   => 'password'
         ));
 
         $crawler = $client->request('GET', $url);
@@ -55,8 +56,18 @@ class PublicControllerTest extends WebTestCase
 
     public function urlUserOfController()
     {
+        echo shell_exec('php bin/console doctrine:schema:drop --env=test --force');
+        echo shell_exec('php bin/console doctrine:schema:create --env=test');
+        echo shell_exec('php bin/console doctrine:fixtures:load --env=test');
+
         return [
+            ['/', 200],
+            ['/load-more-trick', 200],
             ['/add-trick',200],
+            ['/edit-trick/1',200],
+            ['/remove-trick/1',302],
+            ['/remove-picture/5',302],
+            ['/remove-video/3',302],
         ];
     }
 }
