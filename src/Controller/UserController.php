@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use App\Event\Events;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends Controller
 {
@@ -140,7 +141,7 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->redirectToRoute('reset_password_confirm');
+                return $this->redirectToRoute('index');
             }
         }
 

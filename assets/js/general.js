@@ -19,4 +19,13 @@ $(document).ready(function () {
 		$('body').removeAttr('style');
 	});
 
+	$('.my-remove-alert').click(function(e){
+		var val = confirm("Etes vous sur de vouloir supprimer cette élément définitivement ?");
+
+		if(val == false)
+		{
+			e.preventDefault();
+		}
+	})
+
 });

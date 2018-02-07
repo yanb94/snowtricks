@@ -23,11 +23,11 @@
 	    				<h1>{{figure.name}}</h1>
 	    				{% if is_granted('ROLE_USER') %}
 		    				<div class="my-edit-trick">
-		    					<a href="">
+		    					<a href="{{path('edit_trick',{id: figure.id})}}">
 		    						<i class="fas fa-pencil-alt fa-2x"></i>
 		    					</a>
 		    					&nbsp &nbsp
-		    					<a href="{{path('remove_trick',{id: figure.id})}}">
+		    					<a class="my-remove-alert" href="{{path('remove_trick',{id: figure.id})}}">
 									<i class="fas fa-trash-alt fa-2x"></i>
 								</a>
 		    				</div>

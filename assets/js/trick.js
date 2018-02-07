@@ -33,6 +33,10 @@ $(document).ready(function () {
 
 	});
 
+	$('.my-remove-img').click(function(e){
+		e.stopPropagation();
+	})
+
 	$('.my-video').click(function(e){
 		
 		var newElem = $($(this).attr('data-video')).addClass('my-video-modal');
@@ -43,5 +47,6 @@ $(document).ready(function () {
 		$('.my-modal-container').attr('style','display:flex!important');		
 
 	});
+
 
 });

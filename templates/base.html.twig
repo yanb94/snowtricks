@@ -19,6 +19,20 @@
     		    
     		{% endblock %}
     	</div>
+    	{% for message in app.flashes('add_tricks_error') %}
+		    <div class="my-flash-message">
+		        <div class="alert alert-danger">
+		        	{{ message }}
+		        </div>
+		    </div>
+		{% endfor %}
+		{% for message in app.flashes('add_tricks_success') %}
+		    <div class="my-flash-message ">
+		        <div class="alert alert-success">
+		        	{{ message }}
+		        </div>
+		    </div>
+		{% endfor %}
     	<div class="container-fluid d-none d-sm-block d-md-block d-lg-block d-xl-block">
     		<header class="row">
     			<div class="col-12 p-0">

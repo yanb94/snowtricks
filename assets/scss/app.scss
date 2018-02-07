@@ -339,6 +339,7 @@ $list-tricks-space: 50px;
 .my-button-end-form
 {
 	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 .my-media-content
@@ -406,6 +407,32 @@ $list-tricks-space: 50px;
 	height:480px;
 }
 
+.my-remove-img
+{
+	background-color: white;
+	position:absolute;
+	top:0;
+	right:16px;
+	border: 1px solid silver;
+	box-shadow: 1px 1px 1px grey;
+	font-size:medium;
+	padding:3px;
+	z-index:40;
+}
+
+.my-remove-img > a
+{
+	color:black;
+}
+
+.my-flash-message
+{
+	position: absolute;
+    top: 56px;
+    z-index: 200;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
 
 	.my-video-modal
@@ -459,5 +486,9 @@ $list-tricks-space: 50px;
 		bottom:50px;
 	}
 
+	.my-flash-message
+	{
+		top:0;
+	}
 
 }

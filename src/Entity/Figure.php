@@ -5,10 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
  * @UniqueEntity("name")
+ * @UniqueEntity("slug")
  * @ORM\HasLifecycleCallbacks
  */
 class Figure
@@ -23,14 +25,14 @@ class Figure
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -230,11 +232,28 @@ class Figure
 
     /////////////
 
+    public function appendVideos($videos)
+    {
+        foreach ($videos as $video) {
+            $video->setFigure($this);
+        }
+
+        $this->videos = array_merge($this->videos->toArray(), $videos);
+
+        return $this;
+    }
+
+    public function setVideos($videos)
+    {
+        $this->videos = $videos;
+        return $this;
+    }
+
     public function addVideo(Video $video)
     {
         $this->videos[] = $video;
 
-        $video->setFigure($video);
+        $video->setFigure($this);
 
         return $this;
     }
@@ -251,11 +270,29 @@ class Figure
 
     //////////////
 
+    public function appendImages($images)
+    {
+        foreach ($images as $image) {
+            $image->setFigure($this);
+        }
+
+        $this->images = array_merge($this->images->toArray(), $images);
+
+        return $this;
+    }
+
+    public function setImages($images)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
     public function addImage(Picture $image)
     {
         $this->images[] = $image;
 
-        $image->setFigure($image);
+        $image->setFigure($this);
 
         return $this;
     }
