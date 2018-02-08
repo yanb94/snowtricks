@@ -10,6 +10,7 @@ use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AppFixtures extends Fixture
 {
@@ -38,11 +39,32 @@ class AppFixtures extends Fixture
                 ->setIsActive(true)
                 ->setRoles(array('ROLE_USER'));
 
+        $persoConfirm = (new User())
+                ->setEmail('persoemail@email.com')
+                ->setUsername('persoconfirm')
+                ->setPassword('password')
+                ->setPhoto((new Picture())->setExtension('png'))
+                ->setIsActive()
+                ->setValidationToken('my_test_validation_token')
+                ->setRoles(array('ROLE_USER'));
+
+        $persoReinitPass = (new User())
+                ->setEmail('passwordemail@email.com')
+                ->setUsername('persoreinit')
+                ->setPassword('password')
+                ->setPhoto((new Picture())->setExtension('png'))
+                ->setIsActive(true)
+                ->setResetToken('my_test_reset_token')
+                ->setRoles(array('ROLE_USER'));
+
+
         $password = $this->encoder->encodePassword($perso, $perso->getPassword());
 
         $perso->setPassword($password);
 
         $manager->persist($perso);
+        $manager->persist($persoConfirm);
+        $manager->persist($persoReinitPass);
 
         $data = [
              [
@@ -97,15 +119,26 @@ class AppFixtures extends Fixture
              ],
          ];
 
+
+
         foreach ($data as $value) {
+            $picture1 = new Picture();
+            $picture1->setExtension('jpg');
+
+            $picture2 = new Picture();
+            $picture2->setExtension('png');
+            
+            $picture3 = new Picture();
+            $picture3->setExtension('jpg');
+
             $figure = new Figure();
             $figure
                  ->setName($value['name'])
                  ->setDescription($value['description'])
                  ->setGroup($value['group'])
-                 ->addImage((new Picture())->setExtension('jpg'))
-                 ->addImage((new Picture())->setExtension('jpg'))
-                 ->addImage((new Picture())->setExtension('jpg'))
+                 ->addImage($picture1)
+                 ->addImage($picture2)
+                 ->addImage($picture3)
                  ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'))
                  ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'));
 

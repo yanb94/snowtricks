@@ -23,30 +23,6 @@ class EditFigureType extends AbstractType
                 'class' => Group::class,
                 'choice_label' => 'name',
             ])
-            ->add('images', CollectionType::class, [
-                'entry_type' => PictureType::class,
-                'entry_options' => [
-                    "label" => false,
-                    "attr"=>["class" => "my-input-add-cont"]
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'mapped' => false
-            ])
-            ->add('videos', CollectionType::class, [
-                'entry_type' => VideoType::class,
-                'entry_options' => [
-                    "label" => false,
-                    "attr"=>["class" => "my-input-add-cont"]
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'mapped' => false
-            ])
         ;
     }
 
@@ -55,6 +31,7 @@ class EditFigureType extends AbstractType
         $resolver->setDefaults([
             // uncomment if you want to bind to a class
             'data_class' => Figure::class,
+            'validation_groups' => array('edit_figure')
         ]);
     }
 }

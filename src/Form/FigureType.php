@@ -53,6 +53,7 @@ class FigureType extends AbstractType
         $resolver->setDefaults([
             // uncomment if you want to bind to a class
             'data_class' => Figure::class,
+            'validation_groups' => array("figure")
         ]);
     }
 }

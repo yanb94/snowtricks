@@ -121,11 +121,13 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->findOneByResetToken($token);
-        $emailUser = $user->getEmail();
+        
 
         if (is_null($user)) {
             throw new NotFoundHttpException('Token invalide');
         }
+
+        $emailUser = $user->getEmail();
 
         $form = $this->createForm(ResetPasswordType::class);
 
@@ -141,6 +143,7 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
+                $this->addFlash('add_tricks_success', 'Le mot de passe à été réinitialisé');
                 return $this->redirectToRoute('index');
             }
         }

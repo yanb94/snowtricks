@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
- * @UniqueEntity("name")
- * @UniqueEntity("slug")
+ * @UniqueEntity("name",groups={"edit_figure", "figure"})
+ * @UniqueEntity("slug",groups={"edit_figure", "figure"})
  * @ORM\HasLifecycleCallbacks
  */
 class Figure
@@ -24,21 +24,20 @@ class Figure
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(groups={"edit_figure","figure"})
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"edit_figure","figure"})
      * @ORM\Column(type="text")
      */
     private $description;
@@ -46,7 +45,7 @@ class Figure
     /**
      * @var App\Entity\Group
      *
-     * @Assert\Valid
+     * @Assert\Valid(groups={"edit_figure","figure"})
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Group", cascade={"persist"})
      */
@@ -72,11 +71,13 @@ class Figure
     private $comments;
 
     /**
+     * @Assert\Valid(groups={"figure"})
      * @ORM\OneToMany(targetEntity="App\Entity\Picture",mappedBy="figure",cascade={"persist", "remove"})
      */
     private $images;
 
     /**
+     * @Assert\Valid(groups={"figure"})
      * @ORM\OneToMany(targetEntity="App\Entity\Video",mappedBy="figure",cascade={"persist", "remove"})
      */
     private $videos;

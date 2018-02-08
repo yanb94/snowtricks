@@ -69,28 +69,36 @@
     		{% endif %}
 	    	<div class="row justify-content-center">
 	    		<div class="col-xl-8">
+					<h2>Ajouter une image</h2>
+					<hr>
+					{{ form_start(formPicture) }}
+					{{ form_row(formPicture.file) }}
+					{{ form_rest(formPicture) }}
+					<div class="text-right">
+						<input class="btn btn-info" type="submit" value="Ajouter une image">
+					</div>
+					{{ form_end(formPicture) }}
+					<hr>
+	    		</div>
+	    		<div class="col-xl-8">
+					<h2>Ajouter une vidéo</h2>
+					<hr>
+					{{ form_start(formVideo) }}
+					{{ form_row(formVideo.url) }}
+					{{ form_rest(formVideo) }}
+					<div class="text-right">
+						<input class="btn btn-info" type="submit" value="Ajouter une vidéo">
+					</div>
+					{{ form_end(formVideo) }}
+					<hr>
+	    		</div>
+	    		<div class="col-xl-8">
+    				<h2>Modifier le Tricks</h2>
+					<hr>
     				{{ form_start(form) }}
 					    {{ form_row(form.name) }}
 					    {{ form_row(form.description) }}
-					    {{ form_row(form.group) }}
-					    
-					    <div id="list-image-input" >
-					    	{{ form_row(form.images) }}
-					    </div>
-					    
-					    <div class="text-center btn-group justify-content-center my-full-width">
-					    	<button id="add-image-input" type="button" data-list="#edit_figure_images" data-inputs="#list-image-input" class="btn btn-info my-add-input">Ajouter une image</button>
-					    	<button data-list="#figure_images" data-inputs="#list-image-input" class="btn btn-danger my-delete-button">Supprimer une image</button>
-						</div>
-
-						<div id="list-video-input">
-					    	{{ form_row(form.videos) }}
-						</div>
-
-						<div class="text-center btn-group justify-content-center my-full-width">
-							<button id="add-video-input" type="button" data-list="#edit_figure_videos" data-inputs="#list-video-input" class="btn btn-info my-add-input">Ajouter une video</button>
-							<button data-list="#figure_videos" data-inputs="#list-video-input" class="btn btn-danger my-delete-button">Supprimer une video</button>
-						</div>					
+					    {{ form_row(form.group) }}				
 
 					    {{ form_rest(form) }}
 					    <hr>

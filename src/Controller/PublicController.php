@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Figure;
 use App\Form\CommentType;
+use App\Form\PictureType;
+use App\Form\VideoType;
 use App\Entity\Comment;
 use App\Entity\Video;
 use App\Entity\Picture;
@@ -97,26 +99,44 @@ class PublicController extends Controller
     public function editTrick(Figure $figure, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $picture = (new Picture())->setFigure($figure);
+        $video = (new Video())->setFigure($figure);
         
         $form = $this->createForm(EditFigureType::class, $figure);
+        $formPicture = $this->createForm(PictureType::class, $picture);
+        $formVideo = $this->createForm(VideoType::class, $video);
+
+        $formPicture->handleRequest($request);
+        if ($formPicture->isSubmitted() && $formPicture->isValid()) {
+            $em->persist($picture);
+            $em->flush();
+
+            return $this->redirectToRoute('edit_trick', ['id'=> $figure->getId()]);
+        }
+
+        $formVideo->handleRequest($request);
+        if ($formVideo->isSubmitted() && $formVideo->isValid()) {
+            $em->persist($video);
+            $em->flush();
+
+            return $this->redirectToRoute('edit_trick', ['id'=> $figure->getId()]);
+        }
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $videos = $form->get("videos")->getData();
-            $images = $form->get("images")->getData();
-
-            $figure->appendImages($images);
-            $figure->appendVideos($videos);
-
             $em->persist($figure);
             $em->flush();
 
             return $this->redirectToRoute('trick', ['slug'=> $figure->getSlug()]);
         }
 
+
         return $this->render('edit-tricks.html.twig', [
             "figure" => $figure,
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            "formPicture" => $formPicture->createView(),
+            "formVideo" => $formVideo->createView()
         ]);
     }
 

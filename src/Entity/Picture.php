@@ -27,12 +27,13 @@ class Picture
     private $extension;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"figure"})
      * @Assert\File(
      *     maxSize = "1M",
      *     mimeTypes = {"image/png", "image/jpeg"},
      *     mimeTypesMessage = "Doit être soit un jpeg ou un png",
-     *     maxSizeMessage = "Ne doit pas dépasser 1Mo"
+     *     maxSizeMessage = "Ne doit pas dépasser 1Mo",
+     *     groups={"figure"}
      * )
      */
     private $file;
