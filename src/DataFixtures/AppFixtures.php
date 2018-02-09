@@ -11,14 +11,17 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class AppFixtures extends Fixture
 {
     private $encoder;
+    private $kernel;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder, KernelInterface $kernel)
     {
         $this->encoder = $encoder;
+        $this->kernel = $kernel;
     }
 
     public function load(ObjectManager $manager)
@@ -31,40 +34,42 @@ class AppFixtures extends Fixture
         $manager->persist($groupTwo);
         $manager->persist($groupThree);
 
-        $perso = (new User())
-                ->setEmail('email@email.com')
-                ->setUsername('perso')
-                ->setPassword('password')
-                ->setPhoto((new Picture())->setExtension('png'))
-                ->setIsActive(true)
-                ->setRoles(array('ROLE_USER'));
+        if ($this->kernel->getEnvironment() == 'test') {
+            $perso = (new User())
+                    ->setEmail('email@email.com')
+                    ->setUsername('perso')
+                    ->setPassword('password')
+                    ->setPhoto((new Picture())->setExtension('png'))
+                    ->setIsActive(true)
+                    ->setRoles(array('ROLE_USER'));
 
-        $persoConfirm = (new User())
-                ->setEmail('persoemail@email.com')
-                ->setUsername('persoconfirm')
-                ->setPassword('password')
-                ->setPhoto((new Picture())->setExtension('png'))
-                ->setIsActive()
-                ->setValidationToken('my_test_validation_token')
-                ->setRoles(array('ROLE_USER'));
+            $persoConfirm = (new User())
+                    ->setEmail('persoemail@email.com')
+                    ->setUsername('persoconfirm')
+                    ->setPassword('password')
+                    ->setPhoto((new Picture())->setExtension('png'))
+                    ->setIsActive()
+                    ->setValidationToken('my_test_validation_token')
+                    ->setRoles(array('ROLE_USER'));
 
-        $persoReinitPass = (new User())
-                ->setEmail('passwordemail@email.com')
-                ->setUsername('persoreinit')
-                ->setPassword('password')
-                ->setPhoto((new Picture())->setExtension('png'))
-                ->setIsActive(true)
-                ->setResetToken('my_test_reset_token')
-                ->setRoles(array('ROLE_USER'));
+            $persoReinitPass = (new User())
+                    ->setEmail('passwordemail@email.com')
+                    ->setUsername('persoreinit')
+                    ->setPassword('password')
+                    ->setPhoto((new Picture())->setExtension('png'))
+                    ->setIsActive(true)
+                    ->setResetToken('my_test_reset_token')
+                    ->setRoles(array('ROLE_USER'));
+        
 
+            $password = $this->encoder->encodePassword($perso, $perso->getPassword());
 
-        $password = $this->encoder->encodePassword($perso, $perso->getPassword());
+            $perso->setPassword($password);
 
-        $perso->setPassword($password);
-
-        $manager->persist($perso);
-        $manager->persist($persoConfirm);
-        $manager->persist($persoReinitPass);
+            $manager->persist($perso);
+            $manager->persist($persoConfirm);
+            $manager->persist($persoReinitPass);
+        }
 
         $data = [
              [
@@ -132,15 +137,18 @@ class AppFixtures extends Fixture
             $picture3->setExtension('jpg');
 
             $figure = new Figure();
-            $figure
-                 ->setName($value['name'])
+            $figure->setName($value['name'])
                  ->setDescription($value['description'])
-                 ->setGroup($value['group'])
-                 ->addImage($picture1)
-                 ->addImage($picture2)
-                 ->addImage($picture3)
-                 ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'))
-                 ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'));
+                 ->setGroup($value['group']);
+            
+            if ($this->kernel->getEnvironment() == 'test') {
+                $figure->addImage($picture1)
+                     ->addImage($picture2)
+                     ->addImage($picture3)
+                     ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'))
+                     ->addVideo((new Video())->setUrl('https://www.youtube.com/watch?v=k-ImCpNqbJw'));
+            }
+
 
             $manager->persist($figure);
         }

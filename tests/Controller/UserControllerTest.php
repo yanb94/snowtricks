@@ -91,6 +91,7 @@ class UserControllerTest extends WebTestCase
     public function testForgotPasswordRequest()
     {
         $client = static::createClient();
+        $client->enableProfiler();
         $crawler = $client->request('GET', '/forgot_password');
 
         $form = $crawler->selectButton('Réinitialisez le mot de passe')->form();
@@ -98,6 +99,15 @@ class UserControllerTest extends WebTestCase
         $form['forgot_password[username]'] = 'perso';
 
         $crawler = $client->submit($form);
+
+        $mailCollector = $client->getProfile()->getCollector('swiftmailer');
+
+        $this->assertSame(1, $mailCollector->getMessageCount());
+
+        $collectedMessages = $mailCollector->getMessages();
+        $message = $collectedMessages[0];
+
+        $this->assertSame('email@email.com', key($message->getTo()));
 
         $crawler = $client->followRedirect();
 
@@ -216,6 +226,9 @@ class UserControllerTest extends WebTestCase
 
     public function testInscription()
     {
+        $client = static::createClient();
+        $client->enableProfiler();
+
         $image = new UploadedFile(
             __DIR__.'/../../public/test-file/test-img.jpg',
             'image.jpg',
@@ -224,7 +237,6 @@ class UserControllerTest extends WebTestCase
             true
         );
 
-        $client = static::createClient();
         $crawler = $client->request('GET', '/register');
 
         $form = $crawler->selectButton('Créer un compte')->form();
@@ -236,6 +248,15 @@ class UserControllerTest extends WebTestCase
         $form['user[photo][file]'] = $image;
 
         $crawler = $client->submit($form);
+
+        $mailCollector = $client->getProfile()->getCollector('swiftmailer');
+
+        $this->assertSame(1, $mailCollector->getMessageCount());
+
+        $collectedMessages = $mailCollector->getMessages();
+        $message = $collectedMessages[0];
+
+        $this->assertSame('mysuperemail@email.com', key($message->getTo()));
 
         $crawler = $client->followRedirect();
 

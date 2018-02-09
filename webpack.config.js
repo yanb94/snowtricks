@@ -16,7 +16,7 @@ Encore
     .addEntry('js/load-more-trick', './assets/js/load-more-trick.js')
     .addEntry('js/trick', './assets/js/trick.js')
     .addEntry('js/general', './assets/js/general.js')
-    .addStyleEntry('css/app.css', './assets/scss/app.scss')
+    .addStyleEntry('css/app', './assets/scss/app.scss')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
