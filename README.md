@@ -87,3 +87,11 @@ DATABASE_URL=<Your database connection>
 ###< doctrine/doctrine-bundle ###
 
 ```
+
+## Initialize Project
+
+For init the data of the project execute this following command
+
+```sh
+php bin\console doctrine:fixtures:load
+```
