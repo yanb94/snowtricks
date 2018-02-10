@@ -90,6 +90,16 @@ DATABASE_URL=<Your database connection>
 
 ## Initialize Project
 
+### Create DataBase
+
+For create the database of project execute this following command
+```sh
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+```
+
+### Load the init data
+
 For init the data of the project execute this following command
 
 ```sh
