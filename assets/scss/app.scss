@@ -51,9 +51,23 @@ li.nav-item > a.nav-link
 	background-color:white;
 }
 
+.container.my-cont-user
+{
+	background-color: inherit;
+	margin-top:50px;
+}
+
 .my-cont > .container
 {
 	min-height: calc(100vh - (70px + 57px));
+}
+
+.my-form-user
+{
+	background-color: white;
+	padding: 2%;
+    box-shadow: 1px 1px 1px silver;
+    border: 1px solid silver;
 }
 
 .my-img-error
