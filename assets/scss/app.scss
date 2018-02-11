@@ -1,0 +1,76 @@
+$myblue: #0059b9;
+
+body
+{
+	background-color: lighten($myblue,50%);
+}
+
+.my-nav
+{
+	background-color: $myblue!important;
+}
+
+li.nav-item > a.nav-link
+{
+	color: white!important;
+}
+
+.my-footer
+{
+	background-color: darken($myblue,5%);
+	height: 70px;
+	font-size:small;
+	padding-left: 20px;
+}
+
+.my-footer > div
+{
+	color:white;
+}
+
+.my-cont
+{
+	min-height: calc(100vh - (70px + 57px));
+}
+
+.my-nav-phone
+{
+	background-color: $myblue;
+	position: absolute;
+	bottom: 0;
+	padding: 1%;
+}
+
+.my-link-no-deco, .my-link-no-deco:hover
+{
+	color:white;
+}
+
+.container
+{
+	background-color:white;
+}
+
+.my-cont > .container
+{
+	min-height: calc(100vh - (70px + 57px));
+}
+
+.my-img-error
+{
+	max-width:300px;
+}
+
+@media (max-width: 576px) {
+	.my-cont
+	{
+		min-height: auto;
+	}
+
+	.my-cont > .container
+	{
+		padding-left: -15px;
+		padding-right: -15px;
+		min-height: 100vh;
+	}
+}

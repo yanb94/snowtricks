@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Erreur 403 - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+    	<div class="row">
+    		<div class="col-12">
+		    	<h1>Erreur 403</h1>
+		    	<p>Vous n'avez pas les droit nécessaire pour accéder à cette page</p>
+	    	</div>
+	    	<div class="col-12 text-center">
+	    		<img class="my-img-error" src="{{asset('img/403.png')}}">
+	    	</div>
+    	</div>
+    </div>
+{% endblock %}
