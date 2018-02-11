@@ -1,6 +1,30 @@
 index:
   path: /
-  defaults: { _controller: 'App\Controller\PublicController::index' }
+  defaults: { _controller: 'App\Controller\PublicController::index'}
+trick:
+  path: /trick/{slug}
+  defaults: { _controller: 'App\Controller\PublicController::oneTrick'}
+add_trick:
+  path: /add-trick
+  defaults: { _controller: 'App\Controller\PublicController::addTrick'}
+load_more_comment:
+  path: /load-more-comment/{id}/{page}
+  defaults: {_controller: 'App\Controller\PublicController::loadlistComment', page: 1}
+load_more_trick:
+  path: /load-more-trick/{page}
+  defaults: {_controller: 'App\Controller\PublicController::loadListTrick', page: 1}
+edit_trick:
+  path: /edit-trick/{id}
+  defaults: {_controller: 'App\Controller\PublicController::editTrick'}
+remove_trick:
+  path: /remove-trick/{id}
+  defaults: {_controller: 'App\Controller\PublicController::removeTrick'}
+remove_picture:
+  path: /remove-picture/{id}
+  defaults: {_controller: 'App\Controller\PublicController::removePicture'}
+remove_video:
+  path: /remove-video/{id}
+  defaults: {_controller: 'App\Controller\PublicController::removeVideo'}
 security_login:
   path: /login
   defaults: { _controller: 'App\Controller\UserController::login'}

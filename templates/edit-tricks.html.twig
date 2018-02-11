@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Editer {{figure.name}} - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div id="img-index" class="my-img-index">
+    </div>
+    <div class="my-cover-img-index my-one-trick text-center">
+    </div>
+    <div class="d-flex d-justify-content-center my-cont-parent-trick">
+	    <div class="container my-background-white my-container-one-trick">
+	    	<div class="row my-big-img-trick">
+	    		<div class="col-12 my-no-padding my-big-img-trick-cont">
+	    			<div class="my-big-img-trick">
+	    				{% if figure.images.0 is not defined %}
+	    					<img src="{{asset('img/default_small.jpg')}}">
+	    				{% else %}
+	    					<img src="{{figure.images.0.getWebPath()}}">
+	    				{% endif %}
+	    			</div>
+	    			<div class="my-big-img-cover">
+	    				<h1>{{figure.name}}</h1>
+	    				{% if is_granted('ROLE_USER') and figure.images.0 is defined %}
+		    				<div class="my-edit-trick">
+		    					<a href="{{path('remove_picture',{id: figure.images.0.id})}}">
+									<i class="my-remove-alert fas fa-trash-alt fa-2x"></i>
+								</a>
+		    				</div>
+	    				{% endif %}
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="row my-list-media-tricks justify-content-md-center d-md-flex d-sm-none d-none">
+	    		{% for image in figure.images %}
+	    			<div class="my-media-content my-img col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" data-url="{{image.getWebPath()}}">
+	    				<img src="{{image.getWebPath()}}" alt="{{figure.name}}">
+	    				<div class="my-remove-img">
+	    					<a href="{{path('remove_picture',{id: image.id})}}">
+	    						<i class="my-remove-alert fas fa-trash-alt fa-2x"></i>
+	    					</a>
+	    				</div>
+	    			</div>
+	    		{% endfor %}
+
+	    		{% for video in figure.videos %}
+	    			<div class="my-media-content my-video col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" data-video="{{video.video}}">
+	    				<img src="{{video.urlImage()}}" alt="{{figure.name}}">
+	    				<div class="my-cont-play-button d-flex align-items-center justify-content-center">
+	    					<img class="my-play-button" src="{{asset('img/play_button.png')}}" alt="Play">
+	    				</div>
+	    				<div class="my-remove-img">
+	    					<a href="{{path('remove_video',{id: video.id})}}">
+	    						<i class="my-remove-alert fas fa-trash-alt fa-2x"></i>
+	    					</a>
+	    				</div>
+	    			</div>
+	    		{% endfor %}
+	    	</div>
+	    	<div class="row my-button-see-mobile-media justify-content-center align-items-center d-xl-none d-lg-none d-md-none">
+	    		<div class="col-12 text-center">
+		    		<button id="show-media" class="btn btn-primary btn-lg">
+		    			Voir les médias
+		    		</button>
+	    		</div>
+	    	</div>
+    		{% if figure.images is not empty or figure.videos is not empty  %}
+				<hr>
+    		{% endif %}
+	    	<div class="row justify-content-center">
+	    		<div class="col-xl-8">
+					<h2>Ajouter une image</h2>
+					<hr>
+					{{ form_start(formPicture) }}
+					{{ form_row(formPicture.file) }}
+					{{ form_rest(formPicture) }}
+					<div class="text-right">
+						<input class="btn btn-info" type="submit" value="Ajouter une image">
+					</div>
+					{{ form_end(formPicture) }}
+					<hr>
+	    		</div>
+	    		<div class="col-xl-8">
+					<h2>Ajouter une vidéo</h2>
+					<hr>
+					{{ form_start(formVideo) }}
+					{{ form_row(formVideo.url) }}
+					{{ form_rest(formVideo) }}
+					<div class="text-right">
+						<input class="btn btn-info" type="submit" value="Ajouter une vidéo">
+					</div>
+					{{ form_end(formVideo) }}
+					<hr>
+	    		</div>
+	    		<div class="col-xl-8">
+    				<h2>Modifier le Tricks</h2>
+					<hr>
+    				{{ form_start(form) }}
+					    {{ form_row(form.name) }}
+					    {{ form_row(form.description) }}
+					    {{ form_row(form.group) }}				
+
+					    {{ form_rest(form) }}
+					    <hr>
+
+					    <div class="text-right my-button-end-form" >
+					    	<a class="btn btn-danger" href="{{path('remove_trick',{id: figure.id})}}">Supprimer</a>
+					    	<button class="btn btn-primary" type="submit">Editer le trick</button>
+					    </div>
+					{{ form_end(form) }}
+	    		</div>
+	    	</div>
+	   	</div>
+   	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{asset('build/js/trick.js')}}"></script>
+    <script type="text/javascript" src="{{asset('build/js/add_trick.js')}}"></script>
+{% endblock %}

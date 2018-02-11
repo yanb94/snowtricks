@@ -1,0 +1,30 @@
+{% for figure in figures %}
+	<div class="col-xl-2 co-lg-3 col-md-4 col-sm-6 col-12">
+		<div class="my-tricks-preview">
+			<div class="my-tricks-thumb">
+			    {% if figure.images is empty %}
+					<img src="{{asset('img/default_small.jpg')}}">
+				{% else %}
+					<img src="{{figure.images.0.getWebPath()}}">
+				{% endif %}
+			</div>
+			<div class="my-tricks-info row">
+				<div class="col-7 my-preview-tricks-title ">
+					<a href="{{path('trick',{slug: figure.slug})}}"><h3 title="{{figure.name}}" class="my-trick-item-title">{{figure.name}}</h3></a>
+				</div>
+				{% if is_granted('ROLE_USER') %}
+					<div class="col-2 my-icon-trash-list text-right">
+    					<a href="{{path('edit_trick',{id: figure.id})}}">
+    						<i class="fas fa-pencil-alt fa-sm"></i>
+    					</a>
+					</div>
+					<div class="col-3 my-icon-trash-list text-right">
+						<a class="my-remove-alert" href="{{path('remove_trick',{id: figure.id})}}">
+							<i class="fas fa-trash-alt fa-sm"></i>
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endfor %}

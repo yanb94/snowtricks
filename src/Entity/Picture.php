@@ -27,17 +27,23 @@ class Picture
     private $extension;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"figure"})
      * @Assert\File(
      *     maxSize = "1M",
      *     mimeTypes = {"image/png", "image/jpeg"},
      *     mimeTypesMessage = "Doit être soit un jpeg ou un png",
-     *     maxSizeMessage = "Ne doit pas dépasser 1Mo"
+     *     maxSizeMessage = "Ne doit pas dépasser 1Mo",
+     *     groups={"figure"}
      * )
      */
     private $file;
 
     private $tempFilename;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure",inversedBy="images")
+     */
+    private $figure;
 
     /**
      * @return mixed
@@ -157,6 +163,26 @@ class Picture
 
     public function getWebPath()
     {
-        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
+        return '/'.$this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFigure()
+    {
+        return $this->figure;
+    }
+
+    /**
+     * @param mixed $figure
+     *
+     * @return self
+     */
+    public function setFigure(Figure $figure)
+    {
+        $this->figure = $figure;
+
+        return $this;
     }
 }

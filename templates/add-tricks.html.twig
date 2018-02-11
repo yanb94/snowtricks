@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajouter un trick - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    
+<div class="container my-cont-user">
+    <div class="row">
+    	<div class="col-12">
+		    <div class="row justify-content-center">
+		        <div class="my-form-user col-lg-5 col-md-8 col-sm-12 col-12">
+		            <div class="col-12 well">
+		            	<div class="text-center">
+		            		<h1>Ajouter un trick</h1>
+		            		<hr>
+		            	</div>
+						{{ form_start(form) }}
+						    {{ form_row(form.name) }}
+						    {{ form_row(form.description) }}
+						    {{ form_row(form.group) }}
+						    
+						    <div id="list-image-input" >
+						    	{{ form_row(form.images) }}
+						    </div>
+						    
+						    <div class="text-center btn-group justify-content-center my-full-width">
+						    	<button id="add-image-input" type="button" data-list="#figure_images" data-inputs="#list-image-input" class="btn btn-info my-add-input">Ajouter une image</button>
+						    	<button data-list="#figure_images" data-inputs="#list-image-input" class="btn btn-danger my-delete-button">Supprimer une image</button>
+							</div>
+
+							<div id="list-video-input">
+						    	{{ form_row(form.videos) }}
+							</div>
+
+							<div class="text-center btn-group justify-content-center my-full-width">
+								<button id="add-video-input" type="button" data-list="#figure_videos" data-inputs="#list-video-input" class="btn btn-info my-add-input">Ajouter une video</button>
+								<button data-list="#figure_videos" data-inputs="#list-video-input" class="btn btn-danger my-delete-button">Supprimer une video</button>
+							</div>					
+
+						    {{ form_rest(form) }}
+
+						    <div class="text-center my-button-end-form" >
+						    	<button class="btn btn-primary" type="submit">Ajouter un trick</button>
+						    </div>
+						{{ form_end(form) }}
+		            </div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+
+</div> 
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript" src="{{asset('build/js/add_trick.js')}}"></script>
+
+{% endblock %}

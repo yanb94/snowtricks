@@ -1,1 +1,40 @@
 {% extends 'base.html.twig' %}
+{% block title %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <div class="my-img-no-overlap">
+    	    <div id="img-index" class="my-img-index">
+    	    </div>
+    	    <div class="my-cover-img-index cover-index-page text-center">
+    	    	<h1 class="my-catch-phrase">Snowtricks le site communautaire des snowboarders</h1>
+    	    	<div class="my-arrow-down">
+    	    		<a href="#list-tricks">
+    	    			<i class="fas fa-arrow-down fa-3x"></i>
+    	    		</a>
+    	    	</div>
+    	    </div>
+        </div>
+    </div>
+    <div id="list-tricks" class="my-background-white container-fluid">
+    	<div id="all-trick" class="row">
+    		{% include 'list-trick.html.twig' with {'figures': figures} only %}
+    	</div>
+    	<div class="row">
+    		<div class="col-12 d-flex align-items-center justify-content-center my-index-load-more-button">
+    			<button id="load-more-trick" data-url="{{path('load_more_trick')}}" data-page="2" class="btn btn-primary btn-lg">Voir plus</button>
+    		</div>
+    	</div>
+    	<div class="my-arrow-up row flex-row-reverse">
+    		<a href="#list-tricks">
+    			<i class="fas fa-arrow-up fa-3x"></i>
+    		</a>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{asset('build/js/load-more-trick.js')}}"></script>
+{% endblock %}

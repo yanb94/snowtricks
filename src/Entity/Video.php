@@ -36,10 +36,16 @@ class Video
      * @Assert\Regex(
      *     pattern="#^(http|https):\/\/(www.youtube.com|www.dailymotion.com|vimeo.com)\/#",
      *     match=true,
-     *     message="L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo"
+     *     message="L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo",
+     *     groups={"figure"}
      * )
      */
     private $url;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure",inversedBy="videos")
+     */
+    private $figure;
 
     /**
      * @return int
@@ -205,5 +211,25 @@ class Video
         "'  frameborder='0'  allowfullscreen></iframe>";
 
         return $video;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFigure()
+    {
+        return $this->figure;
+    }
+
+    /**
+     * @param mixed $figure
+     *
+     * @return self
+     */
+    public function setFigure(Figure $figure)
+    {
+        $this->figure = $figure;
+
+        return $this;
     }
 }

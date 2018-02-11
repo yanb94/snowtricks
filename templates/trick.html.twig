@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{figure.name}} - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <div id="img-index" class="my-img-index">
+    </div>
+    <div class="my-cover-img-index my-one-trick text-center">
+    </div>
+    <div class="d-flex d-justify-content-center my-cont-parent-trick">
+	    <div class="container my-background-white my-container-one-trick">
+	    	<div class="row my-big-img-trick">
+	    		<div class="col-12 my-no-padding my-big-img-trick-cont">
+	    			<div class="my-big-img-trick">
+	    				{% if figure.images is empty %}
+	    					<img src="{{asset('img/default_small.jpg')}}">
+	    				{% else %}
+	    					<img src="{{figure.images.0.getWebPath()}}">
+	    				{% endif %}
+	    			</div>
+	    			<div class="my-big-img-cover">
+	    				<h1>{{figure.name}}</h1>
+	    				{% if is_granted('ROLE_USER') %}
+		    				<div class="my-edit-trick">
+		    					<a href="{{path('edit_trick',{id: figure.id})}}">
+		    						<i class="fas fa-pencil-alt fa-2x"></i>
+		    					</a>
+		    					&nbsp &nbsp
+		    					<a class="my-remove-alert" href="{{path('remove_trick',{id: figure.id})}}">
+									<i class="fas fa-trash-alt fa-2x"></i>
+								</a>
+		    				</div>
+	    				{% endif %}
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="row my-list-media-tricks justify-content-md-center d-md-flex d-sm-none d-none">
+	    		{% for image in figure.images %}
+	    			<div class="my-media-content my-img col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" data-url="{{image.getWebPath()}}">
+	    				<img src="{{image.getWebPath()}}" alt="{{figure.name}}">
+	    			</div>
+	    		{% endfor %}
+
+	    		{% for video in figure.videos %}
+	    			<div class="my-media-content my-video col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" data-video="{{video.video}}">
+	    				<img src="{{video.urlImage()}}" alt="{{figure.name}}">
+	    				<div class="my-cont-play-button d-flex align-items-center justify-content-center">
+	    					<img class="my-play-button" src="{{asset('img/play_button.png')}}" alt="Play">
+	    				</div>
+	    			</div>
+	    		{% endfor %}
+	    	</div>
+	    	<div class="row my-button-see-mobile-media justify-content-md-center align-items-center d-xl-none d-lg-none d-md-none">
+	    		<div class="col-12 text-center">
+		    		<button id="show-media" class="btn btn-primary btn-lg">
+		    			Voir les médias
+		    		</button>
+	    		</div>
+	    	</div>
+    		{% if figure.images is not empty or figure.videos is not empty  %}
+				<hr>
+    		{% endif %}
+	    	<div class="row my-description-trick">
+	    		<div class="col-12">
+		    		<p> 
+		    			{{figure.description|nl2br}}
+		    		</p>
+		    		<div class="text-center small">
+		    			Crée le {{figure.createdAt|date('j')}}/{{figure.createdAt|date('n')}}/{{figure.createdAt|date('Y ')}}
+			    		à
+			    		{{figure.createdAt|date(' G:i')}}
+
+			    		{% if figure.editedAt != null %}
+							- Modifié le {{figure.editedAt|date('j')}}/{{figure.editedAt|date('n')}}/{{figure.editedAt|date('Y ')}}
+				    		à
+				    		{{figure.editedAt|date(' G:i')}}
+			    		{% endif %}
+
+			    		- Groupe : {{figure.group.name}}
+		    		</div>
+		    			
+	    		</div>
+
+	    	</div>
+
+			<hr>
+
+			{% if is_granted('ROLE_USER') %}
+		    	<div class="row">
+		    		
+			    		<div class="col-12">
+			    			{{form_start(form)}}
+							
+							<div class="row justify-content-center">
+								<div class="col-lg-9 col-md-8 col-sm-6 col-7">{{form_widget(form)}}</div>
+								<div class="col-lg-3 col-md-4 col-sm-6 col-5"><input class="btn btn-primary" type="submit" value="Laisse un Commentaire"></div>
+							</div>
+
+			    			{{form_rest(form)}}
+			    			{{form_end(form)}}
+			    		</div>
+		    		
+		    	</div>
+		    	<hr>
+			{% endif %}
+	
+	    	<div class="row my-comment-trick justify-content-center my-no-margin">
+	    		<div id="all-comment" class="col-lg-8 col-md-10 col-sm-12 col-12 col row my-no-padding">
+	    		{% include 'list-comments.html.twig' with {'comments':comments} only %}
+	    		</div>
+	    	</div>
+
+	    	<div class="row justify-content-center my-load-more-comment">
+	    		<div class="col-12 text-center">
+	    			<button id="load-more" data-page="2" data-url="{{path('load_more_comment',{id: figure.id})}}" class="btn btn-primary btn-lg">Afficher plus de commentaire</button>
+	    		</div>
+	    	</div>
+	   	</div>
+   	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{asset('build/js/load_more_comment.js')}}"></script>
+    <script type="text/javascript" src="{{asset('build/js/trick.js')}}"></script>
+{% endblock %}
