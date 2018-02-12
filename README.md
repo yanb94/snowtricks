@@ -1,3 +1,5 @@
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5eaf75f-e9c9-4b79-bff6-75cee60c9e43/big.png)](https://insight.sensiolabs.com/projects/d5eaf75f-e9c9-4b79-bff6-75cee60c9e43)
+
 # SnowTricks
 
 Communitary platform on snowboard theme for the project 6 on OpenClassroom
