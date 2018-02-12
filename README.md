@@ -1,4 +1,4 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5eaf75f-e9c9-4b79-bff6-75cee60c9e43/big.png)](https://insight.sensiolabs.com/projects/d5eaf75f-e9c9-4b79-bff6-75cee60c9e43)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a85b469a-999f-425e-bd01-0c243b266809/big.png)](https://insight.sensiolabs.com/projects/a85b469a-999f-425e-bd01-0c243b266809)
 
 # SnowTricks
 
